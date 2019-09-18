@@ -46,5 +46,5 @@ bool caractereValido(char t) {
 
 
 int main() {
-    (letra('a')? printf("true\n") : printf("false\n"));
+    
 }
