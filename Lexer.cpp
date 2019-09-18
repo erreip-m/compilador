@@ -43,7 +43,7 @@ bool caractereValido(char t) {
     return (digito(t)  ||  letra(t)  ||  espaco(t));
 }
 
-
+//TODO função para "espiar" próximo char da cadeia e outra para pegá-lo
 
 int main() {
     
