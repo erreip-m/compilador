@@ -1,26 +1,26 @@
-#include <cstdio>
+#include <ios>
 
 // Lista de palavras reservadas
-//
+
 //      programainicio, execucaoinicio, fimexecucao, fimprograma
-//
+
 //      definainstrucao, como
-//
+
 //      inicio, fim
-//
+
 //      repita, vezes, fimrepita
-//
+
 //      enquanto, faca, fimpara
-//
+
 //      se, ent ao, fimse, senao, fimsenao
-//
+
 //      mova, passo, passos, vire para, pare, finalize, apague lampada, acenda lampada, aguarde ate
-//
+
 //      robo pronto, robo ocupado, robo parado, robo movimentando, frente robo bloqueada, 
 //      direita robo bloqueada, esquerda robo bloqueada, lampada acesa a frente, 
 //      lampada apagada a frente, lampada acesa a esquerda,  lampada apagada a esquerda,
 //      lampada apagada a esquerda, lampada acesa a direita, lampada apagada a direita
-//      
+      
 //      esquerda, direita
 
 // Verifica se o caractere é um digito
@@ -46,5 +46,5 @@ bool caractereValido(char t) {
 //TODO função para "espiar" próximo char da cadeia e outra para pegá-lo
 
 int main() {
-    
+    std::cout<<"teste";
 }
