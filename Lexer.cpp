@@ -8,6 +8,7 @@ using std::cout;
 
 class Token {
     public:
+
         //Conjunto de palavras reservadas da linguagem
         const set<string> reservadas {
             "A",
@@ -55,6 +56,7 @@ class Token {
             "VEZES",
             "VIRE"
         };
+
         //Tipos de Token
         enum class Tipo {
             Comentario,
@@ -62,25 +64,28 @@ class Token {
             Numero, 
             Reservado
         };
-        //Declaração do construtor da classe Token
+
+        // Declaração do construtor da classe Token
         Token(Tipo tipo, string lexema);
-        //Declaração dos métodos get
+
+        // Declaração dos métodos get
         Tipo obterTipo();
         string obterLexema();
 
     private:
-        //Variáveis para guardar informações do Token
+    
+        // Variáveis para guardar informações do Token
         Tipo tipo;
         string lexema;
 };
 
-//Construtor de Token
+// Construtor de Token
 Token::Token(Tipo tipo, string lexema) {
     this->tipo = tipo;
     this->lexema = lexema;
 }
 
-//Métodos get de Token
+// Métodos get de Token
 Token::Tipo Token::obterTipo() {
     return tipo;
 }
