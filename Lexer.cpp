@@ -73,7 +73,7 @@ class Token {
         string obterLexema();
 
     private:
-    
+
         // Variáveis para guardar informações do Token
         Tipo tipo;
         string lexema;
@@ -121,6 +121,6 @@ bool caractereValido(char t) {
 
 
 int main() {
-    Token tok(Token::Tipo::Identificador, "teste12345");
+    Token tok(Token::Tipo::Identificador, "teste123");
     cout << tok.obterLexema() << "\n";
 }
