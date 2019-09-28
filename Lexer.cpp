@@ -6,29 +6,6 @@ using std::string;
 using std::cin;
 using std::cout;
 
-// Lista de palavras reservadas
-
-//      programainicio, execucaoinicio, fimexecucao, fimprograma
-
-//      definainstrucao, como
-
-//      inicio, fim
-
-//      repita, vezes, fimrepita
-
-//      enquanto, faca, fimpara
-
-//      se, ent ao, fimse, senao, fimsenao
-
-//      mova, passo, passos, vire para, pare, finalize, apague lampada, acenda lampada, aguarde ate
-
-//      robo pronto, robo ocupado, robo parado, robo movimentando, frente robo bloqueada, 
-//      direita robo bloqueada, esquerda robo bloqueada, lampada acesa a frente, 
-//      lampada apagada a frente, lampada acesa a esquerda,  lampada apagada a esquerda,
-//      lampada apagada a esquerda, lampada acesa a direita, lampada apagada a direita
-      
-//      esquerda, direita
-
 class Token {
     public:
         const set<string> reservadas {
@@ -82,51 +59,6 @@ class Token {
             Identificador,
             Numero, 
             Reservado
-          /*Reservados:
-            A,
-            ACENDA,
-            ACESA,
-            AGUARDE,
-            APAGADA,
-            APAGUE,
-            ATE,
-            BLOQUEADA,
-            COMO,
-            DEFINAINSTRUCAO,
-            DIREITA,
-            ENQUANTO,
-            ENTAO,
-            ESQUERDA,
-            EXECUCAOINICIO,
-            FACA,
-            FIM,
-            FIMEXECUCAO,
-            FIMPARA,
-            FIMPROGRAMA,
-            FIMREPITA,
-            FIMSE,
-            FIMSENAO,
-            FINALIZE,
-            FRENTE,
-            INICIO,
-            LAMPADA,
-            MOVA,
-            MOVIMENTANDO,
-            OCUPADO,
-            PARA,
-            PARADO,
-            PARE,
-            PASSO,
-            PASSOS,
-            PROGRAMAINICIO,
-            PRONTO,
-            REPITA,
-            ROBO,
-            SE,
-            SENAO,
-            VEZ,
-            VEZES,
-            VIRE*/
         };
         Token(Tipo tipo, string lexema);
         Tipo obterTipo();
