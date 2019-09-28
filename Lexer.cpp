@@ -109,6 +109,6 @@ bool caractereValido(char t) {
 
 
 int main() {
-    Token tok(Token::Tipo::Identificador, "teste123");
+    Token tok(Token::Tipo::Identificador, "teste12345");
     cout << tok.obterLexema() << "\n";
 }
