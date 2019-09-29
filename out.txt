@@ -1,0 +1,46 @@
+	Token: Reservado, Lexema: PROGRAMAINICIO
+	Token: Reservado, Lexema: DEFINAINSTRUCAO
+	Token: Identificador, Lexema: TRILHA
+	Token: Reservado, Lexema: COMO
+	Token: Comentario, Lexema: #teste de comentario !/
+
+#ERRO: CARACTERE INVALIDO. LINHA: 4, COLUNA: 1
+
+	Token: Invalido, Lexema: %
+	Token: Reservado, Lexema: INICIO
+	Token: Reservado, Lexema: MOVA
+	Token: Numero, Lexema: 3
+	Token: Reservado, Lexema: PASSOS
+	Token: Reservado, Lexema: AGUARDE
+	Token: Reservado, Lexema: ATE
+	Token: Reservado, Lexema: ROBO
+	Token: Reservado, Lexema: PRONTO
+	Token: Reservado, Lexema: VIRE
+	Token: Reservado, Lexema: PARA
+	Token: Reservado, Lexema: ESQUERDA
+	Token: Reservado, Lexema: APAGUE
+	Token: Reservado, Lexema: LAMPADA
+	Token: Reservado, Lexema: VIRE
+	Token: Reservado, Lexema: PARA
+	Token: Reservado, Lexema: DIREITA
+	Token: Reservado, Lexema: MOVA
+	Token: Numero, Lexema: 1
+	Token: Reservado, Lexema: PASSO
+	Token: Reservado, Lexema: AGUARDE
+	Token: Reservado, Lexema: ATE
+	Token: Reservado, Lexema: ROBO
+	Token: Reservado, Lexema: PRONTO
+	Token: Reservado, Lexema: FIM
+	Token: Reservado, Lexema: EXECUCAOINICIO
+	Token: Reservado, Lexema: REPITA
+
+#ERRO: NUMERO EXCEDE LIMITE. LINHA: 15, COLUNA: 23
+
+	Token: Numero, Lexema: 3494987845647
+	Token: Reservado, Lexema: VEZES
+	Token: Identificador, Lexema: TRILHA
+	Token: Reservado, Lexema: VIRE
+	Token: Reservado, Lexema: PARA
+	Token: Reservado, Lexema: DIREITA
+	Token: Reservado, Lexema: FIMEXECUCAO
+	Token: Reservado, Lexema: FIMPROGRAMA
