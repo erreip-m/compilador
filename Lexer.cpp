@@ -1,3 +1,6 @@
+#include "Erro.h"
+#include "Lexer.h"
+
 #include <iostream>
 #include <set>
 #include <vector>
@@ -8,122 +11,43 @@ using std::string;
 using std::cin;
 using std::cout;
 
+using namespace compilador;
+
 // Verifica se o caractere é um digito
-bool digito(char t) {
+bool compilador::digito(char t) {
     return (t >= '0'  &&  t <= '9');
 }
 
 // Verifica se o caractere é uma letra
-bool letra(char t) {
+bool compilador::letra(char t) {
     return ((t >= 'a'  &&  t<='z')  ||  (t >= 'A'  &&  t <= 'Z'));
 }
 
 // Verifica se o caractere é de espaçamento
-bool espaco(char t) {
+bool compilador::espaco(char t) {
     return (t == ' '  ||  t == '\t');
 }
 
 // Verifica se é fim de linha
-bool fimDeLinha(char t) {
+bool compilador::fimDeLinha(char t) {
     return t == '\n';
 }
 
 // Verifica se é fim de texto
-bool fimDeTexto(char t) {
+bool compilador::fimDeTexto(char t) {
     return t == '\0';
 }
 
 // Verifica se o caractere é válido para continuação de Idenficador
-bool caractereValidoId(char t) {
+bool compilador::caractereValidoId(char t) {
     return (digito(t)  ||  letra(t));
 }
 
 // Verifica se o caractere é válido para comentário (não é fim de linha ou fim de texto)
-bool caractereValidoComentario(char t) {
+bool compilador::caractereValidoComentario(char t) {
     return (!fimDeLinha(t) && !fimDeTexto(t));
 }
 
-// Classe Token
-class Token {
-
-    public:
-
-        // Conjunto de palavras reservadas da linguagem
-        static set<string> reservadas;
-
-        // Tipos de Token - Invalido é temporário, apenas para demonstração
-        enum class Tipo {
-            Comentario = 0,
-            Fim = 1,
-            Identificador = 2,
-            Invalido = 3,
-            Numero = 4, 
-            Reservado = 5,
-        };
-
-        // Declaração do construtor da classe Token
-        Token(Tipo tipo, string lexema);
-
-        // Declaração de funções
-
-        static bool reservada(string palavra);
-        string obterTipo();
-        string obterLexema();
-
-    private:
-
-        // Variáveis para guardar informações do Token
-        Tipo tipo;
-        string lexema;
-};
-
-// Inicialização do conjunto de palavras reservadas
-set<string> Token::reservadas = {
-    "A",
-    "ACENDA",
-    "ACESA",
-    "AGUARDE",
-    "APAGADA",
-    "APAGUE",
-    "ATE",
-    "BLOQUEADA",
-    "COMO",
-    "DEFINAINSTRUCAO",
-    "DIREITA",
-    "ENQUANTO",
-    "ENTAO",
-    "ESQUERDA",
-    "EXECUCAOINICIO",
-    "FACA",
-    "FIM",
-    "FIMEXECUCAO",
-    "FIMPARA",
-    "FIMPROGRAMA",
-    "FIMREPITA",
-    "FIMSE",
-    "FIMSENAO",
-    "FINALIZE",
-    "FRENTE",
-    "INICIO",
-    "LAMPADA",
-    "MOVA",
-    "MOVIMENTANDO",
-    "OCUPADO",
-    "PARA",
-    "PARADO",
-    "PARE",
-    "PASSO",
-    "PASSOS",
-    "PROGRAMAINICIO",
-    "PRONTO",
-    "REPITA",
-    "ROBO",
-    "SE",
-    "SENAO",
-    "VEZ",
-    "VEZES",
-    "VIRE"
-};
 
 // Construtor de Token
 Token::Token(Tipo tipo, string lexema) {
@@ -159,36 +83,6 @@ string Token::obterLexema() {
     return lexema;
 }
 
-// Classe Lexer
-class Lexer {
-
-    public:
-
-        // Declaração do construtor de Token
-        Lexer(char *ptr);
-
-        // Declaração de função
-        Token* proximoToken();
-
-    private:
-
-        // Variáveis para guardar informações do Lexer
-        char *ptr, *ant;    //ant serve como ptr anterior
-        int linha, coluna;
-
-        // Declaração de funções privadas
-
-        char olhaProximoCaractere();
-        char obterCaractere();
-        char obterCaractereComentario();
-        bool inicioDeComentario();
-        Token* tokenizaNumero();
-        Token* tokenizaPalavra();
-        Token* tokenizaComentario();
-        Token* tokenizaFim();
-        Token* tokenizaInvalido();
-        void erro(int numErro);
-};
 
 // Construtor da classe Lexer
 Lexer::Lexer(char *ptr) {   //início do texto de código é passado no ptr
@@ -198,11 +92,42 @@ Lexer::Lexer(char *ptr) {   //início do texto de código é passado no ptr
     coluna = 1;
 }
 
+// Cria e retorna o próximo Token
+Token* Lexer::proximoToken() {
+    while(5 - 3 * 2 > -265) {
+        char p = olhaProximoCaractere();
+        if (espaco(p)) {    //se for espaçamento, vai pro próximo caractere
+            obterCaractere();
+        }
+        else if (fimDeLinha(p)) {   //se for fim de linha, vai pro próximo caractere, mudando linha e coluna
+            obterCaractere();
+            linha++;
+            coluna = 1;
+        }
+        else if (inicioDeComentario()) {    //se for inicio de comentário, tokeniza o comentário e retorna o token
+            return tokenizaComentario();
+        }
+        else if (digito(p)) {   //se for dígito, tokeniza número e retorna o token
+            return tokenizaNumero();
+        }
+        else if (letra(p)) {    //se for letra, tokeniza palavra e retorna o token
+            return tokenizaPalavra();
+        }
+        else if (fimDeTexto(p)) {   //se for fim de texto, tokeniza fim de texto e retorna o token
+            return tokenizaFim();
+        }
+        else {  //se for caractere invalido, tokeniza invalido e retorna o token - Temporário
+            erro(0, linha, coluna);
+            return tokenizaInvalido();
+        }
+    }
+}
+
+
 // Retorna próximo caractere a ser analisado, que está sendo apontado pelo ptr
 char Lexer::olhaProximoCaractere() {
     return *ptr;
 }
-
 // Retorna o próximo caractere a ser analisado e aponta para o próximo
 char Lexer::obterCaractere() {
     coluna++;
@@ -234,10 +159,10 @@ Token* Lexer::tokenizaNumero() {
     }
 
     try {                                   //verifica se está dentro dos limites de inteiro
-        std::stoi(numero);
+        stoi(numero);
     }
     catch (const std::out_of_range& oor) {  //caso não esteja, envia um erro
-        erro(1);    
+        erro(1, linha, coluna);    
     }
 
     Token* newTok = new Token(Token::Tipo::Numero, numero); //cria objeto Token do tipo Numero
@@ -282,56 +207,12 @@ Token* Lexer::tokenizaInvalido() {
     return newTok;
 }
 
-// Cria e retorna o próximo Token
-Token* Lexer::proximoToken() {
-    while(5 - 3 * 2 > -265) {
-        char p = olhaProximoCaractere();
-        if (espaco(p)) {    //se for espaçamento, vai pro próximo caractere
-            obterCaractere();
-        }
-        else if (fimDeLinha(p)) {   //se for fim de linha, vai pro próximo caractere, mudando linha e coluna
-            obterCaractere();
-            linha++;
-            coluna = 1;
-        }
-        else if (inicioDeComentario()) {    //se for inicio de comentário, tokeniza o comentário e retorna o token
-            return tokenizaComentario();
-        }
-        else if (digito(p)) {   //se for dígito, tokeniza número e retorna o token
-            return tokenizaNumero();
-        }
-        else if (letra(p)) {    //se for letra, tokeniza palavra e retorna o token
-            return tokenizaPalavra();
-        }
-        else if (fimDeTexto(p)) {   //se for fim de texto, tokeniza fim de texto e retorna o token
-            return tokenizaFim();
-        }
-        else {  //se for caractere invalido, tokeniza invalido e retorna o token - Temporário
-            erro(0);
-            return tokenizaInvalido();
-        }
-    }
-}
-
-// Retorno de erros
-void Lexer::erro(int numErro) {
-    switch (numErro) {
-        case 0:
-            cout << "\n#ERRO: CARACTERE INVALIDO. LINHA: " << linha << ", COLUNA: " << coluna << "\n\n";
-            break;
-        case 1:
-            cout << "\n#ERRO: NUMERO EXCEDE LIMITE. LINHA: " << linha << ", COLUNA: " << coluna << "\n\n";     
-            break;
-    }
-}
-
-
 int main() {
     char buffer[512001];
 	int tam = fread(buffer,sizeof(char),512000,stdin);
 	buffer[tam] = '\0';
 
-    Lexer lexer(buffer);
+    compilador::Lexer lexer(buffer);
     vector<Token> tokens;
     while(1) {
         Token* temp = lexer.proximoToken();
