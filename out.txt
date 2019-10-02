@@ -44,3 +44,7 @@
 	Token: Reservado, Lexema: DIREITA
 	Token: Reservado, Lexema: FIMEXECUCAO
 	Token: Reservado, Lexema: FIMPROGRAMA
+
+#ERRO: CARACTERE INVALIDO. LINHA: 19, COLUNA: 1
+
+	Token: Invalido, Lexema: $
