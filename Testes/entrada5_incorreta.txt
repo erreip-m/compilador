@@ -1,0 +1,6 @@
+#o comentario a seguir nao sera aceito por não estar no inicio de linha
+programainicio  #aqui
+    0execucaoinicio cadeia mal formada 
+    difícil fazer casos de teste
+    não sei 
+    5 - 3 != 24564564648975645646

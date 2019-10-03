@@ -1,0 +1,10 @@
+vários 
+caracteres 
+não aceitos 
+por aqui 
+#
+/
+[]
+=
+5 + 2
+3rrado
