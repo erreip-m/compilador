@@ -65,6 +65,22 @@ namespace compilador {
     // Mapa para terminais com espaçamento - TODO
     std::map<std::string, std::vector<std::string>> Token::compostas {
         {"ACENDA", {"LAMPADA"}},
+        {"AGUARDE", {"ATE"}},
+        {"APAGUE", {"LAMPADA"}},
+        {"ROBO", {"MOVIMENTANDO"}},
+        {"ROBO", {"OCUPADO"}},
+        {"ROBO", {"PARADO"}},
+        {"ROBO", {"PRONTO"}},
+        {"VIRE", {"PARA"}},
+        {"DIREITA", {"ROBO","BLOQUEADA"}},
+        {"ESQUERDA", {"ROBO", "BLOQUEADA"}},
+        {"FRENTE", {"ROBO", "BLOQUEADA"}},
+        {"LAMPADA",{"ACESA", "A", "DIREITA"}},
+        {"LAMPADA",{"ACESA", "A", "ESQUERDA"}},
+        {"LAMPADA",{"ACESA", "A", "FRENTE"}},
+        {"LAMPADA",{"APAGADA", "A", "DIREITA"}},
+        {"LAMPADA",{"APAGADA", "A", "ESQUERDA"}},
+        {"LAMPADA",{"APAGADA", "A", "FRENTE"}},
     };
 
     // Inicialização do conjunto de palavras reservadas
