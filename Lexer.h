@@ -3,6 +3,7 @@
 
 #include <set>
 #include <vector>
+#include <map>
 
 namespace compilador {
     // Verifica se o caractere é um digito
@@ -31,17 +32,18 @@ namespace compilador {
 
         public:
 
+            // Mapa para palavras reservadas compostas da linguagem
+            static std::map<std::string, std::vector<std::string>> compostas;
+
             // Conjunto de palavras reservadas da linguagem
             static std::set<std::string> reservadas;
 
-            // Tipos de Token - Invalido é temporário, apenas para demonstração
             enum class Tipo {
                 Comentario = 0,
                 Fim = 1,
                 Identificador = 2,
-                Invalido = 3,
-                Numero = 4, 
-                Reservado = 5,
+                Numero = 3, 
+                Reservado = 4,
             };
 
             // Declaração do construtor da classe Token
@@ -60,22 +62,37 @@ namespace compilador {
             std::string lexema;
     };
 
+//     acenda lampada,aguarde ate,apague lampada,
+// como,
+// definainstrucao,direita,direita robo bloqueada,
+// enquanto,entao,esquerda,esquerda robo bloqueada,execucaoinicio,
+// faca,fim,fimexecucao,fimpara,fimprograma,fimrepita,fimse,fimsenao,finalize,frente robo bloqueada,
+// inicio,
+// lampada acesa a direita,lampada acesa a esquerda,lampada acesa a frente,lampada apagada a direita,lampada apagada a esquerda,lampada apagada a esquerda,lampada apagada a frente,
+// mova,
+// pare,passo,passos,programainicio,
+// repita,robo movimentando,robo ocupado,robo parado,robo pronto,
+// se,senao,
+// vez, vezes,vire para
+
+    // Mapa para terminais com espaçamento
+    std::map<std::string, std::vector<std::string>> Token::compostas {
+        {"ACENDA", {"LAMPADA"}},
+    };
+
     // Inicialização do conjunto de palavras reservadas
     std::set<std::string> Token::reservadas = {
-        "A",
-        "ACENDA",
-        "ACESA",
-        "AGUARDE",
-        "APAGADA",
-        "APAGUE",
-        "ATE",
-        "BLOQUEADA",
+        "ACENDA LAMPADA",
+        "AGUARDE ATE",
+        "APAGUE LAMPADA",
         "COMO",
         "DEFINAINSTRUCAO",
         "DIREITA",
+        "DIREITA ROBO BLOQUEADA",
         "ENQUANTO",
         "ENTAO",
         "ESQUERDA",
+        "ESQUERDA ROBO BLOQUEADA"
         "EXECUCAOINICIO",
         "FACA",
         "FIM",
@@ -86,26 +103,29 @@ namespace compilador {
         "FIMSE",
         "FIMSENAO",
         "FINALIZE",
-        "FRENTE",
+        "FRENTE ROBO BLOQUEADA",
         "INICIO",
-        "LAMPADA",
+        "LAMPADA ACESA A DIREITA",
+        "LAMPADA ACESA A ESQUERDA",
+        "LAMPADA ACESA A FRENTE",
+        "LAMPADA APAGADA A DIREITA",
+        "LAMPADA APAGADA A ESQUERDA",
+        "LAMPADA APAGADA A FRENTE",
         "MOVA",
-        "MOVIMENTANDO",
-        "OCUPADO",
-        "PARA",
-        "PARADO",
         "PARE",
         "PASSO",
         "PASSOS",
         "PROGRAMAINICIO",
-        "PRONTO",
         "REPITA",
-        "ROBO",
+        "ROBO MOVIMENTANDO",
+        "ROBO OCUPADO",
+        "ROBO PARADO",
+        "ROBO PRONTO",
         "SE",
         "SENAO",
         "VEZ",
         "VEZES",
-        "VIRE"
+        "VIRE PARA"
     };
 
     // Classe Lexer
