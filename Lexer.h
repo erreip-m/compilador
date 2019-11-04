@@ -62,20 +62,7 @@ namespace compilador {
             std::string lexema;
     };
 
-//     acenda lampada,aguarde ate,apague lampada,
-// como,
-// definainstrucao,direita,direita robo bloqueada,
-// enquanto,entao,esquerda,esquerda robo bloqueada,execucaoinicio,
-// faca,fim,fimexecucao,fimpara,fimprograma,fimrepita,fimse,fimsenao,finalize,frente robo bloqueada,
-// inicio,
-// lampada acesa a direita,lampada acesa a esquerda,lampada acesa a frente,lampada apagada a direita,lampada apagada a esquerda,lampada apagada a esquerda,lampada apagada a frente,
-// mova,
-// pare,passo,passos,programainicio,
-// repita,robo movimentando,robo ocupado,robo parado,robo pronto,
-// se,senao,
-// vez, vezes,vire para
-
-    // Mapa para terminais com espaçamento
+    // Mapa para terminais com espaçamento - TODO
     std::map<std::string, std::vector<std::string>> Token::compostas {
         {"ACENDA", {"LAMPADA"}},
     };
