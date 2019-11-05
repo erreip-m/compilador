@@ -60,6 +60,11 @@ bool Token::reservada(string palavra) {
     return reservadas.find(palavra) != reservadas.end();
 }
 
+// Verifica se a palavra é reservada composta
+bool Token::composta(string palavra) {
+    return not(compostas[palavra].empty());
+}
+
 // Retorna o tipo do Token, em string - Provavelmente sofrerá alterações
 string Token::obterTipo() {
     switch (int(tipo)) {
@@ -70,10 +75,8 @@ string Token::obterTipo() {
         case 2:
             return "Identificador";
         case 3:
-            return "Invalido";
-        case 4:
             return "Numero";
-        case 5:
+        case 4:
             return "Reservado";
     }
 }
@@ -92,9 +95,16 @@ Lexer::Lexer(char *ptr) {   //início do texto de código é passado no ptr
     coluna = 1;
 }
 
+Lexer::Lexer(char *ptr, char* ant, int linha, int coluna) {
+    this->ptr = ptr;
+    this->ant = ant;
+    this->linha = linha;
+    this->coluna = coluna;
+}
+
 // Cria e retorna o próximo Token
 Token* Lexer::proximoToken() {
-    while(5 - 3 * 2 > -265) {
+    while(1) {
         char p = olhaProximoCaractere();
         if (espaco(p)) {    //se for espaçamento, vai pro próximo caractere
             obterCaractere();
@@ -118,7 +128,7 @@ Token* Lexer::proximoToken() {
         }
         else {  //se for caractere invalido, tokeniza invalido e retorna o token - Temporário
             erro(0, linha, coluna);
-            return tokenizaInvalido();
+            return nullptr;
         }
     }
 }
@@ -179,6 +189,33 @@ Token* Lexer::tokenizaPalavra() {
         Token* newTok = new Token(Token::Tipo::Reservado, palavra); //cria objeto Token do tipo Reservado
         return newTok;
     }
+    else if (Token::composta(palavra)) {
+        string palavrainicial = palavra;
+        Lexer save = *this;
+        int i = 0;
+        for (int k = 0; k < Token::compostas[palavrainicial].size(); k++) {
+            while (i < Token::compostas[palavrainicial][k].size()) {
+                string palavraatual = "";
+                int j;
+                while (espaco(olhaProximoCaractere())) obterCaractere();
+                palavraatual += obterCaractere();
+                while (caractereValidoId(olhaProximoCaractere())) palavraatual += obterCaractere();
+                if (palavraatual == Token::compostas[palavrainicial][k][i]) {
+                    palavra += " " + palavraatual;
+                    i++;
+                }
+                else break;
+            }
+            if (i == Token::compostas[palavrainicial][k].size()) {
+                Token* newTok = new Token(Token::Tipo::Reservado, palavra);
+                return newTok;
+            }
+            else {
+                *this = save;
+                palavra = palavrainicial;
+            }
+        }
+    }
     Token* newTok = new Token(Token::Tipo::Identificador, palavra); //cria objeto Token do tipo Identificador
     return newTok;
 }
@@ -199,19 +236,10 @@ Token* Lexer::tokenizaFim() {
     return newTok;
 }
 
-// Tokeniza caractere inválido - Temporário, apenas para demonstração
-Token* Lexer::tokenizaInvalido() {
-    string invalido = "";
-    invalido = obterCaractere(); 
-    Token* newTok = new Token(Token::Tipo::Invalido, invalido); //cria objeto Token do tipo Invalido
-    return newTok;
-}
-
 int main() {
     char buffer[512001];
 	int tam = fread(buffer,sizeof(char),512000,stdin);
 	buffer[tam] = '\0';
-
     compilador::Lexer lexer(buffer);
     vector<Token> tokens;
     while(1) {

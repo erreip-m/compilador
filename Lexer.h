@@ -33,7 +33,7 @@ namespace compilador {
         public:
 
             // Mapa para palavras reservadas compostas da linguagem
-            static std::map<std::string, std::vector<std::string>> compostas;
+            static std::map<std::string, std::vector<std::vector<std::string>>> compostas;
 
             // Conjunto de palavras reservadas da linguagem
             static std::set<std::string> reservadas;
@@ -52,6 +52,7 @@ namespace compilador {
             // Declaração de funções
 
             static bool reservada(std::string palavra);
+            static bool composta(std::string palavra);
             std::string obterTipo();
             std::string obterLexema();
 
@@ -63,24 +64,24 @@ namespace compilador {
     };
 
     // Mapa para terminais com espaçamento - TODO
-    std::map<std::string, std::vector<std::string>> Token::compostas {
-        {"ACENDA", {"LAMPADA"}},
-        {"AGUARDE", {"ATE"}},
-        {"APAGUE", {"LAMPADA"}},
-        {"ROBO", {"MOVIMENTANDO"}},
-        {"ROBO", {"OCUPADO"}},
-        {"ROBO", {"PARADO"}},
-        {"ROBO", {"PRONTO"}},
-        {"VIRE", {"PARA"}},
-        {"DIREITA", {"ROBO","BLOQUEADA"}},
-        {"ESQUERDA", {"ROBO", "BLOQUEADA"}},
-        {"FRENTE", {"ROBO", "BLOQUEADA"}},
-        {"LAMPADA",{"ACESA", "A", "DIREITA"}},
-        {"LAMPADA",{"ACESA", "A", "ESQUERDA"}},
-        {"LAMPADA",{"ACESA", "A", "FRENTE"}},
-        {"LAMPADA",{"APAGADA", "A", "DIREITA"}},
-        {"LAMPADA",{"APAGADA", "A", "ESQUERDA"}},
-        {"LAMPADA",{"APAGADA", "A", "FRENTE"}},
+    std::map<std::string, std::vector<std::vector<std::string>>> Token::compostas {
+        {"ACENDA", {{"LAMPADA"}}},
+        {"AGUARDE", {{"ATE"}}},
+        {"APAGUE", {{"LAMPADA"}}},
+        {"ROBO", {{"MOVIMENTANDO"}, 
+            {"OCUPADO"}, 
+            {"PARADO"}, 
+            {"PRONTO"}}},
+        {"VIRE", {{"PARA"}}},
+        {"DIREITA", {{"ROBO","BLOQUEADA"}}},
+        {"ESQUERDA", {{"ROBO", "BLOQUEADA"}}},
+        {"FRENTE", {{"ROBO", "BLOQUEADA"}}},
+        {"LAMPADA", {{"ACESA", "A", "DIREITA"}, 
+            {"ACESA", "A", "ESQUERDA"}, 
+            {"ACESA", "A", "FRENTE"},
+            {"APAGADA", "A", "DIREITA"},
+            {"APAGADA", "A", "ESQUERDA"},
+            {"APAGADA", "A", "FRENTE"}}}
     };
 
     // Inicialização do conjunto de palavras reservadas
@@ -95,7 +96,7 @@ namespace compilador {
         "ENQUANTO",
         "ENTAO",
         "ESQUERDA",
-        "ESQUERDA ROBO BLOQUEADA"
+        "ESQUERDA ROBO BLOQUEADA",
         "EXECUCAOINICIO",
         "FACA",
         "FIM",
@@ -138,6 +139,7 @@ namespace compilador {
 
             // Declaração do construtor de Token
             Lexer(char *ptr);
+            Lexer(char *ptr, char* ant, int linha, int coluna);
 
             // Declaração de função
             Token* proximoToken();
