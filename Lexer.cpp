@@ -50,9 +50,16 @@ bool compilador::caractereValidoComentario(char t) {
 
 
 // Construtor de Token
+
 Token::Token(Tipo tipo, string lexema) {
     this->tipo = tipo;
     this->lexema = lexema;
+}
+
+Token::Token(Tipo tipo, string lexema, string valor) {
+    this->tipo = tipo;
+    this->lexema = lexema;
+    this->valor = valor;
 }
 
 // Verifica se a palavra é reservada
@@ -86,20 +93,25 @@ string Token::obterLexema() {
     return lexema;
 }
 
+string Token::obterValor() {
+    return valor;
+}
+
 
 // Construtor da classe Lexer
 Lexer::Lexer(char *ptr) {   //início do texto de código é passado no ptr
     this->ptr = ptr;
-    ant = nullptr;          //ant é um ponteiro pro
+    ant = nullptr;
     linha = 1;
     coluna = 1;
 }
 
-Lexer::Lexer(char *ptr, char* ant, int linha, int coluna) {
-    this->ptr = ptr;
-    this->ant = ant;
-    this->linha = linha;
-    this->coluna = coluna;
+int Lexer::obterLinha() {
+    return linha;
+}
+
+int Lexer::obterColuna() {
+    return coluna;
 }
 
 // Cria e retorna o próximo Token
@@ -175,7 +187,7 @@ Token* Lexer::tokenizaNumero() {
         erro(1, linha, coluna);    
     }
 
-    Token* newTok = new Token(Token::Tipo::Numero, numero); //cria objeto Token do tipo Numero
+    Token* newTok = new Token(Token::Tipo::Numero, "NUMERO", numero); //cria objeto Token do tipo Numero
     return newTok;
 }
 
@@ -216,7 +228,7 @@ Token* Lexer::tokenizaPalavra() {
             }
         }
     }
-    Token* newTok = new Token(Token::Tipo::Identificador, palavra); //cria objeto Token do tipo Identificador
+    Token* newTok = new Token(Token::Tipo::Identificador, "IDENTIFICADOR", palavra); //cria objeto Token do tipo Identificador
     return newTok;
 }
 
@@ -232,22 +244,6 @@ Token* Lexer::tokenizaComentario() {
 
 // Tokeniza fim de texto
 Token* Lexer::tokenizaFim() {
-    Token* newTok = new Token(Token::Tipo::Fim, "\0");  //cria objeto Token do tipo Fim
+    Token* newTok = new Token(Token::Tipo::Fim, "$");  //cria objeto Token do tipo Fim
     return newTok;
-}
-
-int main() {
-    char buffer[512001];
-	int tam = fread(buffer,sizeof(char),512000,stdin);
-	buffer[tam] = '\0';
-    compilador::Lexer lexer(buffer);
-    vector<Token> tokens;
-    while(1) {
-        Token* temp = lexer.proximoToken();
-        if (temp->obterLexema() != "\0") {
-            tokens.push_back(*temp);
-            cout << "\tToken: " << tokens.back().obterTipo() << ", Lexema: " << tokens.back().obterLexema() << "\n"; 
-        }
-        else break;
-    }
 }
