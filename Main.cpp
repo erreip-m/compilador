@@ -21,7 +21,9 @@ using namespace compilador;
 
 int main() {
     char buffer[512001];
-	int tam = fread(buffer,sizeof(char),512000,stdin);
+    // FILE* teste;
+    // teste = fopen("Testes/entrada1_correta.txt", "r");
+	int tam = fread(buffer, sizeof(char), 512000, stdin /*teste*/);
 	buffer[tam] = '\0';
     Parser parser(buffer);
     parser.analisa();   

@@ -47,8 +47,8 @@ namespace compilador {
             };
 
             // Declaração do construtor da classe Token
-            Token(Tipo tipo, std::string lexema);
-            Token(Tipo tipo, std::string lexema, std::string valor);
+            Token(Tipo tipo, std::string lexema, int linha, int coluna);
+            Token(Tipo tipo, std::string lexema, std::string valor, int linha, int coluna);
 
             // Declaração de funções
 
@@ -57,6 +57,8 @@ namespace compilador {
             std::string obterTipo();
             std::string obterLexema();
             std::string obterValor();
+            int obterLinha();
+            int obterColuna();
 
         private:
 
@@ -64,9 +66,10 @@ namespace compilador {
             Tipo tipo;
             std::string lexema;
             std::string valor;
+            int linha, coluna;
     };
 
-    // Mapa para terminais com espaçamento
+    // Inicialização do mapa para palavras reservadas compostas (com espaçamento)
     std::map<std::string, std::vector<std::vector<std::string>>> Token::compostas {
         {"ACENDA", {{"LAMPADA"}}},
         {"AGUARDE", {{"ATE"}}},
@@ -145,8 +148,6 @@ namespace compilador {
 
             // Declaração de função
             Token* proximoToken();
-            int obterLinha();
-            int obterColuna();
 
         private:
 

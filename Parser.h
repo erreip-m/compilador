@@ -2,6 +2,7 @@
 #define PARSER
 
 #include "Lexer.h"
+#include "Sema.h"
 
 #include <map>
 #include <stack>
@@ -9,19 +10,30 @@
 
 namespace compilador {
 
+    // Classe Parser
     class Parser {
+
         public:
 
+            // Declaração do construtor da classe Parser
             Parser(char* buffer);
+
+            // Declaração da função
             void analisa();
 
         private:
 
+            // Variaveis para guardar informação do Parser
+
+            std::stack<std::string> pilha;
+
             Token* tokenAtual;
             Lexer* lexer;
+            Sema* sema;
+
             static std::map<std::pair<std::string, std::string>, std::vector<std::string>> tabela;
-            std::stack<std::string> pilha;
-            std::vector<Token> tokens;
+
+            // Declaração de funções
 
             bool terminal(std::string palavra); 
             bool instrucaoValida();
@@ -30,6 +42,7 @@ namespace compilador {
 
     };
 
+    // Inicialização da tabela
     std::map<std::pair<std::string, std::string>, std::vector<std::string>> Parser::tabela {
         {{"PROGRAMA", "PROGRAMAINICIO"}, {"PROGRAMAINICIO", "DECLARACAO'", "EXECUCAOINICIO", "COMANDO", "FIMEXECUCAO", "FIMPROGRAMA"}},
 
@@ -135,7 +148,6 @@ namespace compilador {
         {{"SENAO'","DEFINAINSTRUCAO"}, {"&"}},
         {{"SENAO'","FIMEXECUCAO"}, {"&"}},
         {{"SENAO'","EXECUCAOINICIO"}, {"&"}},
-
 
         {{"INSTRUCAO","LAMPADA APAGADA A DIREITA"}, {"CONDICAO"}},
         {{"INSTRUCAO","LAMPADA ACESA A DIREITA"}, {"CONDICAO"}},

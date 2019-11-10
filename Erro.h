@@ -19,13 +19,13 @@ void erro(int numErro, int linha, int coluna) {
             cout << "\n#ERRO SINTATICO: EXPRESSAO MAL FORMADA. LINHA: " << linha << ", COLUNA: " << coluna << "\n\n";     
             break;
         case 3:
-            cout << "\n#ERRO SEMANTICO: IDENTIFICADOR JA USADO.\n\n";     
+            cout << "\n#ERRO SEMANTICO: IDENTIFICADOR PREVIAMENTE USADO EM OUTRA DEFINICAO. LINHA: " << linha << ", COLUNA: " << coluna << "\n\n";
             break;
         case 4:
-            cout << "\n#ERRO SEMANTICO: MOVA NAO ACOMPANHADO DE AGUARDE ATE ROBO PRONTO.\n\n";     
+            cout << "\n#ERRO SEMANTICO: INSTRUCAO \"MOVA\" NAO SUCEDIDA POR \"AGUARDE ATE ROBO PRONTO\". LINHA: " << linha << ", COLUNA: " << coluna << "\n\n"; 
             break;
         case 5:
-            cout << "\n#ERRO SEMANTICO: VIRAR PARA SENTIDOS DIFERENTES SEGUIDAMENTE.\n\n";     
+            cout << "\n#ERRO SEMANTICO: VIRAR PARA SENTIDOS DIFERENTES SEGUIDAMENTE. LINHA: " << linha << ", COLUNA: " << coluna << "\n\n";
             break;
     }
 }
