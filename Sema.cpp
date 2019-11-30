@@ -1,9 +1,6 @@
 #include "Erro.h"
 #include "Sema.h"
 
-#include <map>
-#include <stack>
-#include <utility>
 #include <vector>
 
 using std::vector;
@@ -102,19 +99,24 @@ bool Sema::verificaConflitoId(string tok) {
 }
 
 // Analisa semanticamente um token por vez
-void Sema::analisa(Token token) {
-    string tok = token.obterLexema();
+bool Sema::analisa(Token tokenAtual, Token tokenAnterior) {
+    bool erroSemantico = false;
+    string tok = tokenAtual.obterLexema();
 
     if (verificaConflitoSentido(tok)) {
-        erro(5, token.obterLinha(), token.obterColuna());   //se houver conflito
+        erro(5, tokenAnterior.obterLinha(), tokenAnterior.obterColuna());   //se houver conflito
+        erroSemantico = true;
     }
 
     if (verificaConflitoMova(tok)) {
-        erro(4, token.obterLinha(), token.obterColuna());   //se houver conflito
+        erro(4, tokenAnterior.obterLinha(), tokenAnterior.obterColuna());   //se houver conflito
+        erroSemantico = true;
     }
 
     if (verificaConflitoId(tok)) {
-        erro(3, token.obterLinha(), token.obterColuna());   //se houver conflito
+        erro(3, tokenAnterior.obterLinha(), tokenAnterior.obterColuna());   //se houver conflito
+        erroSemantico = true;
     }
-
+    
+    return erroSemantico;
 }

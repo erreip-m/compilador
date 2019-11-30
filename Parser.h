@@ -27,7 +27,7 @@ namespace compilador {
 
             std::stack<std::string> pilha;
 
-            Token* tokenAtual;
+            Token* tokenAtual, *tokenAnterior;
             Lexer* lexer;
             Sema* sema;
 

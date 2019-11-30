@@ -5,7 +5,6 @@
 
 using namespace std;;
 
-
 // Reporta erro na linha e coluna
 void erro(int numErro, int linha, int coluna) {
     switch (numErro) {

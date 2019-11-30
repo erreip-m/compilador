@@ -31,6 +31,7 @@ bool Parser::instrucaoValida() {
 // Pede ao Lexer o próximo Token
 void Parser::proximoToken() {
     do {
+        tokenAnterior = tokenAtual;
         tokenAtual = lexer->proximoToken();
     } while(tokenAtual->obterTipo() == "Comentario");   //ignora Tokens do tipo Comentario
 }
@@ -62,13 +63,14 @@ void Parser::analisa() {
         if (terminal(pilha.top())) {    //se o topo da pilha for terminal...
             if (pilha.top() == tokenAtual->obterLexema()) { //e o token atual for igual...
                 if (pilha.top() != "$") {
-                    sema->analisa(*tokenAtual); //chama analise semantica pro token atual e...
+                    sema->analisa(*tokenAtual, *tokenAnterior); //chama analise semantica pro token atual e...
+                    
                     proximoToken(); //pede o proximo token
                 }
                 pilha.pop();    //tira o terminal da pilha
             }
             else {  //caso o token atual não corresponda ao terminal no topo da pilha...
-                erro(2, tokenAtual->obterLinha(), tokenAtual->obterColuna());   //informa erro sintático
+                erro(2, tokenAnterior->obterLinha(), tokenAnterior->obterColuna());   //informa erro sintático
                 break;
             }
         }
@@ -78,7 +80,7 @@ void Parser::analisa() {
                 obterInstrucao();   //coloca as instruções da regra na pilha
             }
             else {  //se a instrução não estiver na tabela...
-                erro(2, tokenAtual->obterLinha(), tokenAtual->obterColuna());   //informa erro
+                erro(2, tokenAnterior->obterLinha(), tokenAnterior->obterColuna());   //informa erro
                 break;
             }
         }

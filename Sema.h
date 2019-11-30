@@ -17,7 +17,7 @@ namespace compilador {
             Sema();
 
             // Declaração da função
-            void analisa(Token token);
+            bool analisa(Token tokenAtual, Token tokenAnterior);
         
         private:
 
