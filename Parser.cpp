@@ -30,10 +30,11 @@ bool Parser::instrucaoValida() {
 
 // Pede ao Lexer o próximo Token
 void Parser::proximoToken() {
+    tokenAnterior = tokenAtual;
     do {
-        tokenAnterior = tokenAtual;
         tokenAtual = lexer->proximoToken();
-    } while(tokenAtual->obterTipo() == "Comentario");   //ignora Tokens do tipo Comentario
+    } while(tokenAtual == nullptr || tokenAtual->obterTipo() == "Comentario");   //ignora Tokens do tipo Comentario
+    if (tokenAnterior == NULL) tokenAnterior = tokenAtual;
 }
 
 // Coloca na pilha as proximas instruções, com base na tabela

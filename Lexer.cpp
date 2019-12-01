@@ -146,6 +146,7 @@ Token* Lexer::proximoToken() {
         }
         else {  //se for caractere invalido, informa erro léxico e retorna nulo
             erro(0, linha, coluna);
+            obterCaractere();
             return nullptr;
         }
     }
