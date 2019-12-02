@@ -30,9 +30,9 @@ namespace compilador {
             // Declaração de funções
 
             bool idUsado(string id);
-            bool verificaConflitoSentido(string tok);
-            bool verificaConflitoMova(string tok);
-            bool verificaConflitoId(string tok);
+            bool verificaConflitoSentido(Token tok);
+            bool verificaConflitoMova(Token tok);
+            bool verificaConflitoId(Token tok);
 
 
     };
